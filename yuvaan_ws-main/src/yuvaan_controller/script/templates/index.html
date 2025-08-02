@@ -1,0 +1,112 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Motor Data Dashboard</title>
+    <!-- Include Socket.IO client library -->
+    <script src="https://cdn.socket.io/4.0.0/socket.io.min.js"></script>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            padding: 20px;
+            margin: 0;
+            background-color: #f4f4f9;
+        }
+        .container {
+            width: 80%;
+            margin: 0 auto;
+            text-align: center;
+        }
+        h1 {
+            color: #333;
+        }
+        .motor-data {
+            margin-top: 20px;
+            background-color: #fff;
+            border-radius: 8px;
+            padding: 20px;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+        }
+        .motor-data p {
+            font-size: 18px;
+            margin: 5px 0;
+        }
+        .motor-data .value {
+            font-weight: bold;
+            color: #2e86c1;
+        }
+        /* Responsive adjustments */
+        @media (max-width: 768px) {
+            .container {
+                width: 95%;
+            }
+            .motor-data p {
+                font-size: 16px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>Motor Data Dashboard</h1>
+
+        <div class="motor-data">
+            <h2>Motor Data</h2>
+            <p><strong>Linear Velocity (X): </strong><span id="vel_linear_x" class="value">0</span> m/s</p>
+            <p><strong>Angular Velocity (Z): </strong><span id="vel_angular_z" class="value">0</span> rad/s</p>
+            <p><strong>Mode: </strong><span id="mode" class="value">0</span></p>
+
+            <h3>RA (Robotic Arm) Data:</h3>
+            <p><strong>RA 1:</strong> <span id="ra_1" class="value">0</span></p>
+            <p><strong>RA 2:</strong> <span id="ra_2" class="value">0</span></p>
+            <p><strong>RA 3:</strong> <span id="ra_3" class="value">0</span></p>
+            <p><strong>RA 4:</strong> <span id="ra_4" class="value">0</span></p>
+            <p><strong>RA 5:</strong> <span id="ra_5" class="value">0</span></p>
+            <p><strong>RA 6:</strong> <span id="ra_6" class="value">0</span></p>
+
+            <h3>BA (Bio Assembly) Data:</h3>
+            <p><strong>BA 1:</strong> <span id="ba_1" class="value">0</span></p>
+            <p><strong>BA 2:</strong> <span id="ba_2" class="value">0</span></p>
+            <p><strong>BA 3:</strong> <span id="ba_3" class="value">0</span></p>
+            <p><strong>BA 4:</strong> <span id="ba_4" class="value">0</span></p>
+            <p><strong>BA 5:</strong> <span id="ba_5" class="value">0</span></p>
+            <p><strong>BA 6:</strong> <span id="ba_6" class="value">0</span></p>
+        </div>
+    </div>
+
+    <script>
+        // Connect to the Socket.IO server
+        const socket = io.connect('http://localhost:5001');  // Use your server's URL if different
+
+        // Handle connection error
+        socket.on("connect_error", (err) => {
+            console.error("Connection failed:", err);
+        });
+
+        // Listen for motor data updates
+        socket.on('motor_data_update', function(data) {
+            console.log('Received motor data:', data);
+
+            // Update the displayed values in the HTML
+            document.getElementById('vel_linear_x').textContent = data.vel_linear_x;
+            document.getElementById('vel_angular_z').textContent = data.vel_angular_z;
+            document.getElementById('mode').textContent = data.mode;
+
+            document.getElementById('ra_1').textContent = data.ra_1;
+            document.getElementById('ra_2').textContent = data.ra_2;
+            document.getElementById('ra_3').textContent = data.ra_3;
+            document.getElementById('ra_4').textContent = data.ra_4;
+            document.getElementById('ra_5').textContent = data.ra_5;
+            document.getElementById('ra_6').textContent = data.ra_6;
+
+            document.getElementById('ba_1').textContent = data.ba_1;
+            document.getElementById('ba_2').textContent = data.ba_2;
+            document.getElementById('ba_3').textContent = data.ba_3;
+            document.getElementById('ba_4').textContent = data.ba_4;
+            document.getElementById('ba_5').textContent = data.ba_5;
+            document.getElementById('ba_6').textContent = data.ba_6;
+        });
+    </script>
+</body>
+</html>

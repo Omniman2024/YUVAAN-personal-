@@ -1,0 +1,10 @@
+# Remove the old manual export related to /opt/ros/noetic/
+# Add this line to source ROS Jazzy
+source /opt/ros/jazzy/setup.bash
+
+# Keep other non-ROS exports if they are still needed
+export PKG_CONFIG_PATH='/usr/lib/aarch64-linux-gnu/pkgconfig' # 
+export PATH=$PATH:/usr/local/cuda-11.4/bin # 
+export LD_LIBRARY_PATH=/usr/local/cuda-11.4/lib64:$LD_LIBRARY_PATH # 
+export OPENBLAS_CORETYPE=ARMV8 # 
+export OMP_NUM_THREADS=1 #

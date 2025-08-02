@@ -1,0 +1,9 @@
+ping 192.168.2.101
+ssh jetson@192.168.2.101
+roscore
+rosrun joy joy_node _dev:=/dev/input/js0 __name:=joy0  joy:=/joy_a
+rosrun joy joy_node _dev:=/dev/input/js1 __name:=joy1  joy:=/joy_b
+rosrun yuvaan_controller drive.py
+rosrun yuvaan_controller mani.py
+rostopic echo /motor_command
+python3 yuvaan_ws/src/yuvaan_controller/script/video_stream.py

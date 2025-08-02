@@ -1,0 +1,10 @@
+#!/bin/bash
+
+echo "100 client_antenna_90" >> /etc/iproute2/rt_tables
+
+up ip route add default via 192.168.2.90 dev enp0s3 table 100
+ip route show table 100
+
+up ip rule add to 192.168.2.101 table 100
+ip rule list
+
